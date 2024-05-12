@@ -68,8 +68,15 @@ class Task(models.Model):
         auto_now=False, auto_now_add=False, blank=True, null=True
     )
     is_completed = models.BooleanField(default=False)
-    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, related_name="tasks")
-    assignees = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="assigned_tasks")
+    task_type = models.ForeignKey(
+        TaskType,
+        on_delete=models.CASCADE,
+        related_name="tasks"
+    )
+    assignees = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="assigned_tasks"
+    )
 
     class Meta:
         ordering = ["created_date"]

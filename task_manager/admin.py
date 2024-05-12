@@ -6,7 +6,13 @@ from task_manager.models import Task, Worker, Position, TaskType
 
 @admin.register(Task)
 class AdminTask(admin.ModelAdmin):
-    list_display = ["name", "deadline", "is_completed", "priority", "task_type"]
+    list_display = [
+        "name",
+        "deadline",
+        "is_completed",
+        "priority",
+        "task_type"
+    ]
     list_filter = ("assignees", "priority", "task_type",)
 
 

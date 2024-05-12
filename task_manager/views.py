@@ -11,5 +11,5 @@ def index(request):
 
 def tasks_view(request):
     tasks = Task.objects.all()
-    context = {'tasks': tasks}
-    return render(request, 'task_manager/index.html', context)
+    context = {"tasks": tasks}
+    return render(request, "task_manager/index.html", context)
