@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "accounts",
     "task_manager",
     "crispy_forms",
+    "crispy_bootstrap4",
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "task_manager.Worker"
+
+CRISPY_TEMPLATE_PACK = "bootstrap4"
