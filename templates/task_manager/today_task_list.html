@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Today deadline</title>
+{% endblock %}
+
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="{% static 'img/person.svg' %}" alt="Bootstrap" width="22" height="22">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+    Today deadline
+{% endblock %}
+
+{% block content %}
+    {% block tasks-existence-check %}
+        {% if today_tasks %}
+            {% block task-iterator %}
+                {% for task in today_tasks %}
+                    {% include "includes/task_list.html" %}
+                {% endfor %}
+            {% endblock %}
+        {% else %}
+            <p>You have no tasks scheduled for today. Enjoy your day!</p>
+        {% endif %}
+    {% endblock %}
+
+    <div class="mt-3">
+        <a href="#" class="btn btn-primary">Add new task</a>
+    </div>
+{% endblock %}

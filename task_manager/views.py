@@ -71,3 +71,37 @@ class MyTaskListView(LoginRequiredMixin, generic.ListView):
         context["today_date"] = datetime.date.today()
 
         return context
+
+
+class TodayTaskListView(LoginRequiredMixin, generic.ListView):
+    """
+    ListView class that displays tasks with deadlines set for today.
+
+    This view retrieves tasks from the Task model and filters them based on the following criteria:
+
+    * **User:** Only tasks where the current user is included in the `assignees` field are displayed.
+    * **Completion Status:** Only uncompleted tasks (where `is_completed` is False) are included.
+    * **Deadline:** Only tasks with deadlines set for the current date are included.
+
+    The view provides the following context variable to the template:
+
+    * `today_tasks`: A list of filtered tasks with deadlines set for today.
+
+    This view requires users to be logged in using the `LoginRequiredMixin`.
+    """
+
+    model = Task
+    template_name = "task_manager/today_task_list.html"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TodayTaskListView, self).get_context_data(**kwargs)
+        user = self.request.user
+        today = datetime.date.today()
+
+        today_tasks = Task.objects.filter(
+            assignees=user, is_completed=False, deadline__year=today.year,
+            deadline__month=today.month, deadline__day=today.day
+        ).select_related()
+
+        context["today_tasks"] = today_tasks
+        return context
