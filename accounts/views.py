@@ -13,7 +13,7 @@ def login_view(request: HttpRequest) -> HttpResponse:
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            return HttpResponseRedirect(reverse("task_manager:task-list"))
+            return HttpResponseRedirect(reverse("task_manager:tasks"))
         else:
             error_context = {
                 "error": "Invalid credentials"
