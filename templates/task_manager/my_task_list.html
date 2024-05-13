@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    <title>My tasks</title>
+{% endblock %}
+
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="{% static 'img/person.svg' %}" alt="Bootstrap" width="22" height="22">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+    My Tasks
+{% endblock %}
+
+{% block content %}
+    {% block tasks-existence-check %}
+        {% if my_tasks %}
+            {% block task-iterator %}
+                {% for task in my_tasks %}
+                    {% include "includes/task_list.html" %}
+                {% endfor %}
+            {% endblock %}
+        {% else %}
+            <p>No tasks found.</p>
+        {% endif %}
+    {% endblock %}
+
+    <div class="mt-3">
+        <a href="#" class="btn btn-primary">Add new task</a>
+    </div>
+{% endblock %}
