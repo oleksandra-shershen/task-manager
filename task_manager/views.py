@@ -3,8 +3,10 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import generic
 
+from task_manager.forms import TaskForm
 from task_manager.models import Task
 
 
@@ -105,3 +107,10 @@ class TodayTaskListView(LoginRequiredMixin, generic.ListView):
 
         context["today_tasks"] = today_tasks
         return context
+
+
+class TaskCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = 'task_manager/task_form.html'
+    success_url = reverse_lazy('task_manager:tasks')

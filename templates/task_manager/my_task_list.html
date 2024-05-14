@@ -27,6 +27,6 @@
     {% endblock %}
 
     <div class="mt-3">
-        <a href="#" class="btn btn-primary">Add new task</a>
+        <a href="{% url 'task_manager:create-task'%}" class="btn btn-primary">Add new task</a>
     </div>
 {% endblock %}

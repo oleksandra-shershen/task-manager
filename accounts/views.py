@@ -1,12 +1,9 @@
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import UserCreationForm
-from django import forms
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from accounts.forms import WorkerRegistrationForm
-from task_manager.models import Position, Worker
 
 
 def login_view(request: HttpRequest) -> HttpResponse:
