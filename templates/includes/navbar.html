@@ -1,3 +1,4 @@
+{% load static %}
 <style>
     .header {
         display: flex;
@@ -14,21 +15,27 @@
         border-radius: 5px;
         text-decoration: none;
         font-weight: bold;
+        display: flex; /* Включаем flexbox для выравнивания текста и иконки */
+        align-items: center; /* Центрирование содержимого по вертикали */
     }
 
     .logout-button:hover {
         background: linear-gradient(to right, #9A55FF, #DA8CFF);
     }
+
+    .logout-button img { /* Стили для иконки внутри кнопки */
+        margin-right: 8px; /* Отступ справа от иконки */
+    }
 </style>
 
-{% load static %}
 <div class="header">
   <div>
     <img src="{% static 'img/logo.svg' %}" alt="Logo" class="logo-icon">
   </div>
   <div style="margin-left: auto;">
-    <a href="{% url 'accounts:logout'%}" class="logout-button">Log out from account</a>
+    <a href="{% url 'accounts:logout' %}" class="logout-button">
+      <img src="{% static 'img/exit.svg' %}" alt="Log out" width="22" height="22">
+      Log out
+    </a>
   </div>
 </div>
-
-
