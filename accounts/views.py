@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -37,3 +37,12 @@ def register_worker(request):
     else:
         form = WorkerRegistrationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
+
+def logout_view(request):
+  """
+  Logs out the current user and redirects to the login page.
+  """
+  if request.user.is_authenticated:
+      logout(request)
+  return redirect('accounts:login')

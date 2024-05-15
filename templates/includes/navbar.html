@@ -27,7 +27,7 @@
     <img src="{% static 'img/logo.svg' %}" alt="Logo" class="logo-icon">
   </div>
   <div style="margin-left: auto;">
-    <a href="#" class="logout-button">Log out from account</a>
+    <a href="{% url 'accounts:logout'%}" class="logout-button">Log out from account</a>
   </div>
 </div>
 
