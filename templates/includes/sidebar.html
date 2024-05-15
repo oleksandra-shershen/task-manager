@@ -2,6 +2,7 @@
 <style>
     .sidebar {
         width: 260px;
+        background-color: lightcyan;
         color: #333;
         height: 100vh;
         padding: 20px;
@@ -42,15 +43,16 @@
     }
 </style>
 <div class="sidebar">
-    <div class="user-info">
-        <img src="{% static 'img/person.svg' %}" alt="User Image" class="user-image">
-        <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
-    </div>
-    <ul class="menu">
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">Calendar</a></li>
-        <li><a href="#">All Tasks</a></li>
-        <li><a href="#">My Tasks</a></li>
-        <li><a href="#">Today deadline</a></li>
-    </ul>
+  <div class="user-info">
+    <img src="{% static 'img/person.svg' %}" alt="User Image" class="user-image">
+    <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+  </div>
+  <ul class="menu">
+    <li><a href="{% url 'task_manager:overview'%}">Project Overview</a></li>
+    <li><a href="#">Dashboard</a></li>
+    <li><a href="#">Calendar</a></li>
+    <li><a href="#">All Tasks</a></li>
+    <li><a href="#">My Tasks</a></li>
+    <li><a href="#">Today deadline</a></li>
+  </ul>
 </div>
