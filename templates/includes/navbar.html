@@ -6,12 +6,28 @@
         padding: 10px 20px;
         font-family: Arial, sans-serif;
     }
+
+    .logout-button {
+        background: linear-gradient(to right, #DA8CFF, #9A55FF);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .logout-button:hover {
+        background: linear-gradient(to right, #9A55FF, #DA8CFF);
+    }
 </style>
 
 {% load static %}
 <div class="header">
   <div>
     <img src="{% static 'img/logo.svg' %}" alt="Logo" class="logo-icon">
+  </div>
+  <div style="margin-left: auto;">
+    <a href="#" class="logout-button">Log out from account</a>
   </div>
 </div>
 

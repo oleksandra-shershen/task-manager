@@ -10,6 +10,12 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+    .tasks-column {
+      margin-left: -20px;
+      margin-right: -20px;
+    }
+  </style>
   {% load static %}
 </head>
 
@@ -17,7 +23,7 @@
 {% include "includes/navbar.html" %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-3" style="padding: 0;"> <!-- Убраны внутренние отступы -->
+    <div class="col-sm-3 tasks-column"> <!-- Убраны внутренние отступы -->
       {% block sidebar %}
       {% include "includes/sidebar.html" %}
       {% endblock %}

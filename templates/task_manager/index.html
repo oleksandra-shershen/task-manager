@@ -1,3 +1,17 @@
+<style>
+    .gradient-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    background: linear-gradient(to right, #DA8CFF, #9A55FF);
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+</style>
+
 {% extends "base.html" %}
 {% load static %}
 
@@ -6,7 +20,7 @@
 {% endblock %}
 
 {% block tasks-toolbar-icon %}
-    <img class="listTitleIcon" src="{% static 'img/house-door.svg' %}" alt="Bootstrap" width="22" height="22">
+    <img class="listTitleIcon" src="{% static 'img/house.svg' %}" alt="Bootstrap" width="50" height="50">
 {% endblock %}
 
 {% block tasks-toolbar-title %}
@@ -27,6 +41,6 @@
     {% endblock %}
 
     <div class="mt-3">
-        <a href="#" class="btn btn-primary">Add new task</a>
+        <a href="#" class="gradient-btn">Add new task</a>
     </div>
 {% endblock %}
