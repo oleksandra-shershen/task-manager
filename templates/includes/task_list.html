@@ -84,11 +84,6 @@
   <div>
     <div class="taskItem">
       <div class="hover">
-        <form class="complete-task">
-          <span>
-               <input class="form-check-input" type="checkbox" value=""/>
-               </span>
-        </form>
         <a role="button" href="#">
           <span class="task-title">{{ task.name }}</span>
           <div class="d-flex detail-info-box">
@@ -126,11 +121,7 @@
                   <span class="deadline-info">
                   <img class="deadline-info-icon" src="/static/img/calendar-deadline.svg" alt="Bootstrap" width="12"
                        height="12">
-                  {% if task.deadline < today_date %}
                   <span class="deadline-info-text">Deadline: {{ task.deadline }}</span>
-                  {% else %}
-                  <span class="deadline-info-text">Deadline: {{ task.deadline }}</span>
-                  {% endif %}
                   </span>
                   </span>
             {% endif %}
