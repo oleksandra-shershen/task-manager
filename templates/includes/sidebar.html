@@ -1,90 +1,56 @@
 {% load static %}
 <style>
-    .sidebar-nav ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-    }
-
     .sidebar {
-        width: 280px;
-        height: 100vh;
-        background-color: #f0f0f0;
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .sidebar-header {
-        display: flex;
-        align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 1px solid #ddd;
-    }
-
-    .sidebar-nav {
-        flex: 1;
-        overflow-y: auto;
-    }
-
-    .sidebar-link {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        text-decoration: none;
+        width: 260px;
         color: #333;
-        transition: background-color 0.2s ease;
+        height: 100vh;
+        padding: 20px;
+        font-family: 'Arial', sans-serif;
     }
 
-    .sidebar-link img {
-        margin-right: 10px;
-        width: 18px;
-        height: 18px;
+    .user-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
     }
 
-    .sidebar-link:hover {
-        background-color: #e0e0e0;
-    }
-
-    .user-initials {
-        width: 32px;
-        height: 32px;
-        line-height: 32px;
-        text-align: center;
+    .user-image {
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
-        background-color: #6731EC;
-        color: #fff;
-        font-size: 16px;
         margin-right: 10px;
+    }
+
+    .user-name {
+        font-size: 16px;
+    }
+
+    .menu {
+        list-style: none;
+        padding: 0;
+    }
+
+    .menu li a {
+        display: block;
+        padding: 10px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .menu li a:hover {
+        background-color: #f3f3f3;
     }
 </style>
-
-
 <div class="sidebar">
-  <nav class="sidebar-nav">
-    <ul>
-      <li><a href="#" class="sidebar-link">
-        <div class="user-initials">{{ user.first_name|first }}{{ user.last_name|first }}</div>
-        {{ user.first_name }} {{ user.last_name }}
-      </a></li>
-      <li><a href="#" class="sidebar-link">
-        <img src="{% static 'img/house-door.svg' %}" alt="All tasks">
-        All tasks
-      </a></li>
-      <li><a href="{% url "task_manager:my-task" %}" class="sidebar-link">
-        <img src="{% static 'img/person.svg' %}" alt="Tasks"> My tasks
-        </a></li>
-      <li><a href="{% url "task_manager:today-task" %}" class="sidebar-link">
-        <img src="{% static 'img/brightness-high.svg' %}" alt="Today deadline"> Today deadline
-        </a></li>
-      <li><a href="#" class="sidebar-link">
-        <img src="{% static 'img/exclamation-circle.svg' %}" alt="Priority">
-        Priority
-      </a></li>
-      <li><a href="#" class="sidebar-link">
-        <img src="{% static 'img/people.svg' %}" alt="Workers">
-        Workers
-      </a></li>
+    <div class="user-info">
+        <img src="{% static 'img/person.svg' %}" alt="User Image" class="user-image">
+        <div class="user-name">{{ user.first_name }} {{ user.last_name }}</div>
+    </div>
+    <ul class="menu">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Calendar</a></li>
+        <li><a href="#">All Tasks</a></li>
+        <li><a href="#">My Tasks</a></li>
+        <li><a href="#">Today deadline</a></li>
     </ul>
-  </nav>
 </div>

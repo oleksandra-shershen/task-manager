@@ -11,24 +11,18 @@
           crossorigin="anonymous"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   {% load static %}
-
-  <style>
-      .tasks-list-title {
-          padding-left: 10px;
-      }
-  </style>
 </head>
 
 <body>
 {% include "includes/navbar.html" %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-sm-3" style="padding: 0;"> <!-- Убраны внутренние отступы -->
       {% block sidebar %}
       {% include "includes/sidebar.html" %}
       {% endblock %}
     </div>
-    <div class="col-sm-9 p-3">
+    <div class="col-sm-9">
       <div class="container">
         <div class="row">
           <h3 class="d-flex align-items-center">
@@ -36,7 +30,6 @@
             {% endblock %}
             <span class="ms-2 tasks-list-title">
                 {% block tasks-toolbar-title %}
-
                 {% endblock %}
               </span>
           </h3>
