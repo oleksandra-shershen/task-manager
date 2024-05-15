@@ -1,0 +1,33 @@
+<style>
+    .button {
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        color: #fff;
+        border: none;
+        border-radius: 15px;
+        font-weight: bold;
+        margin: 15px 15px 0;
+
+    }
+
+    .confirm-button {
+        background-image: linear-gradient(to right, #DA8CFF, #9A55FF);
+    }
+
+    .cancel-button {
+        background-color: red;
+    }
+</style>
+
+{% extends "base.html" %}
+{% block content %}
+<div style="text-align: left;">
+    <h2>Are you sure you want to delete "{{ object.name }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button confirm-button">Confirm</button>
+        <a href="{% url 'task_manager:tasks' %}" class="button cancel-button">Cancel</a>
+    </form>
+</div>
+{% endblock %}

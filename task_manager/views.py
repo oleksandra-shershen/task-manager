@@ -118,6 +118,19 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy('task_manager:tasks')
 
 
+class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
+    # TO DO
+    # Подумать над тем как обрабатывать кейсы(визуально), когда я
+    # хочу удалить не свою таску
+    model = Task
+    template_name = 'task_manager/task_confirm_delete.html'
+    success_url = reverse_lazy('task_manager:tasks')
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(assignees=self.request.user)
+
+
 def task_summary(request):
     num_urgent_tasks = Task.objects.filter(priority='Urgent').count()
     num_low_tasks = Task.objects.filter(priority='Low').count()
