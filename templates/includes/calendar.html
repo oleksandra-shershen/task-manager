@@ -1,0 +1,19 @@
+<link href='https://unpkg.com/fullcalendar@5.9.0/main.min.css' rel='stylesheet'/>
+<script src='https://unpkg.com/fullcalendar@5.9.0/main.min.js'></script>
+
+<div id='calendar'></div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: {{ tasks_for_calendar | safe }}
+        });
+        calendar.render();
+    });
+</script>

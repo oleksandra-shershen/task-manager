@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -129,3 +130,19 @@ def task_summary(request):
         'num_medium_tasks': num_medium_tasks,
         'num_high_tasks': num_high_tasks,
     })
+
+
+def calendar_view(request):
+    if request.user.is_authenticated:
+        assigned_tasks = Task.objects.filter(assignees=request.user, deadline__isnull=False)
+        tasks_for_calendar = [
+            {
+                'title': task.name.replace("'", "\\'").replace('"', '\\"'),  # Экранируем кавычки
+                'start': task.deadline.strftime('%Y-%m-%dT%H:%M:%S'),
+            }
+            for task in assigned_tasks
+        ]
+    else:
+        tasks_for_calendar = []
+    context = {'tasks_for_calendar': tasks_for_calendar}
+    return render(request, 'task_manager/calendar_task.html', context)
