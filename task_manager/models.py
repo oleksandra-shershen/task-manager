@@ -6,11 +6,11 @@ from task_manager_service import settings
 
 class Position(models.Model):
     POSITION_CHOICES = (
-        ("developer", "Developer"),
-        ("pm", "Project Manager"),
-        ("designer", "Designer"),
-        ("devops", "DevOps"),
-        ("qa", "QA"),
+        ("Developer", "Developer"),
+        ("Project Manager", "Project Manager"),
+        ("Designer", "Designer"),
+        ("DevOps", "DevOps"),
+        ("QA", "QA"),
     )
 
     name = models.CharField(max_length=255, choices=POSITION_CHOICES)
@@ -54,6 +54,14 @@ class Worker(AbstractUser):
 
 
 class Task(models.Model):
+    STATUS_CHOICES = (
+        ('To Do', 'To Do'),
+        ('In Progress', 'In Progress'),
+        ('In Review', 'In Review'),
+        ('Testing', 'Testing'),
+        ('Done', 'Done'),
+    )
+
     PRIORITY_CHOICES = (
         ("Urgent", "Urgent"),
         ("Low", "Low"),
@@ -61,6 +69,7 @@ class Task(models.Model):
         ("High", "High"),
     )
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES)
+    progress = models.CharField(max_length=15, choices=STATUS_CHOICES, default='To Do')
     created_date = models.DateField(auto_now_add=True, blank=False, null=False)
     name = models.CharField(max_length=255, blank=False, null=False)
     description = models.TextField(blank=True, null=True)
