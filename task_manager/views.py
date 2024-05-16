@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from task_manager.forms import TaskForm
+from task_manager.forms import TaskForm, TaskUpdateForm
 from task_manager.models import Task
 
 
@@ -129,6 +129,16 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(assignees=self.request.user)
+
+
+class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Task
+    form_class = TaskUpdateForm
+    template_name = 'task_manager/task_update_form.html'
+    success_url = reverse_lazy("task_manager:tasks")
+
+    def get_queryset(self):
+        return Task.objects.filter(assignees=self.request.user)
 
 
 def task_summary(request):
