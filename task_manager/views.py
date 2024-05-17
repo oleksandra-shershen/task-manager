@@ -19,14 +19,8 @@ def index(request):
 
     This view requires users to be logged in using the `@login_required` decorator.
     """
-    num_visits = request.session.get("num_visits", 0)
-    request.session["num_visits"] = num_visits + 1
 
-    context = {
-        "num_visits": num_visits + 1,
-    }
-
-    return render(request, "task_manager/home_page.html", context=context)
+    return render(request, "task_manager/home_page.html")
 
 
 @login_required
