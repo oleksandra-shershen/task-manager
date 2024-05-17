@@ -19,7 +19,14 @@ def index(request):
 
     This view requires users to be logged in using the `@login_required` decorator.
     """
-    return render(request, "task_manager/home_page.html")
+    num_visits = request.session.get("num_visits", 0)
+    request.session["num_visits"] = num_visits + 1
+
+    context = {
+        "num_visits": num_visits + 1,
+    }
+
+    return render(request, "task_manager/home_page.html", context=context)
 
 
 @login_required
@@ -169,3 +176,14 @@ def calendar_view(request):
         tasks_for_calendar = []
     context = {'tasks_for_calendar': tasks_for_calendar}
     return render(request, 'task_manager/calendar_task.html', context)
+
+
+def kanban_board(request):
+    context = {
+        'to_do': Task.objects.filter(progress='To Do'),
+        'in_progress': Task.objects.filter(progress='In Progress'),
+        'in_review': Task.objects.filter(progress='In Review'),
+        'testing': Task.objects.filter(progress='Testing'),
+        'done': Task.objects.filter(progress='Done'),
+    }
+    return render(request, 'task_manager/kanban_board.html', context)
