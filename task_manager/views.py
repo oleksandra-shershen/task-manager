@@ -149,7 +149,10 @@ class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
         context = super().get_context_data(**kwargs)
         task_columns = {}
         for task_type in TaskType.TASK_TYPE_CHOICES:
-            task_columns[task_type[1]] = Task.objects.filter(task_type__name=task_type[0])
+            task_columns[task_type[1]] = Task.objects.filter(
+                task_type__name=task_type[0],
+                is_completed=False
+            )
         context['task_columns'] = task_columns
         return context
 
