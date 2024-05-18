@@ -12,6 +12,7 @@ from task_manager.views import (
     task_summary,
     calendar_view,
     update_task_status,
+    TaskDetailView,
 )
 
 urlpatterns = [
@@ -30,6 +31,7 @@ urlpatterns = [
         TaskUpdateView.as_view(),
         name="task-update"
     ),
+    path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
     path("tasks/overview/", task_summary, name="overview"),
     path("tasks/calendar/", calendar_view, name="calendar"),
     path(

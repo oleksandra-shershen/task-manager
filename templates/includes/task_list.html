@@ -79,7 +79,7 @@
         <div style="margin-right: 10px;">
           <input type="checkbox" class="form-check-input" id="taskComplete{{ task.id }}" {% if task.is_completed %}checked{% endif %}>
         </div>
-        <a role="button" href="#">
+        <a role="button" href="{% url 'task_manager:task-detail' task.id %}">
           <span class="task-title">{{ task.name }}</span>
           <div class="d-flex detail-info-box">
             {% if task.task_type %}

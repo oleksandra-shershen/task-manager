@@ -95,6 +95,12 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
         return Task.objects.filter(assignees=self.request.user)
 
 
+class TaskDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Task
+    template_name = 'task_manager/task_detail.html'
+    context_object_name = 'task'
+
+
 class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
     template_name = "task_manager/task_dashboard.html"
 

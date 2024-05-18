@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ task.name }}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">Priority: {{ task.get_priority_display }}</h6>
+        <p class="card-text">Description: {{ task.description }}</p>
+        <p>Type: {{ task.task_type.name }}</p>
+        <p>Deadline: {{ task.deadline|date:"D, M d, Y" }}</p>
+        <p>Assigned to:
+            <ul>
+            {% for worker in task.assignees.all %}
+                <li>{{ worker.get_full_name }}</li>
+            {% endfor %}
+            </ul>
+        </p>
+        <a href="{% url 'task_manager:task-update' task.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'task_manager:task-delete' task.id %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+{% endblock %}
