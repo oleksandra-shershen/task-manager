@@ -10,34 +10,48 @@
           integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
           crossorigin="anonymous"></script>
   {% load static %}
+  <style>
+      .full-screen-image {
+          width: 100vw;
+      }
+
+      .logo {
+          position: absolute;
+          left: 15px;
+          top: 15px;
+      }
+
+      .gradient-btn {
+          display: inline-block;
+          padding: 10px 20px;
+          font-size: 16px;
+          font-weight: bold;
+          color: #DA8CFF;
+          text-decoration: none;
+          text-align: center;
+          border-radius: 5px;
+          background-color: #ffffff;
+          border: 2px solid #DA8CFF;
+          height: 45px;
+      }
+  </style>
 </head>
 <body>
-<div class="px-3 py-2 border-bottom mb-3">
-  <div class="container d-flex flex-wrap justify-content-center">
-    <form class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto">
-      <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
-    </form>
+<div class="px-3 py-2 border-bottom mb-0">
+  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+    <div>
+      <img src="{% static 'img/logo.svg' %}" class="logo">
+    </div>
 
-    <div class="text-end">
-      <button type="button" class="btn btn-outline-primary me-2"
-              onclick="window.location.href='{% url 'accounts:login' %}'">Login
-      </button>
-      <button type="button" class="btn btn-primary" onclick="window.location.href='{% url 'accounts:register' %}'">
-        Sign-up
-      </button>
+    <div style="margin-left: auto">
+      <a href="{% url 'accounts:login' %}" class="gradient-btn">Log In</a>
+      <a href="{% url 'accounts:login' %}" class="gradient-btn">Sign Up</a>
     </div>
   </div>
 </div>
-<div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="row">
-    <div class="col">
-      <img src="{% static 'img/img2.png' %}" class="img-fluid mb-3">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <img src="{% static 'img/img1.png' %}" class="img-fluid">
-    </div>
+<div class="container d-flex justify-content-center vh-100">
+  <div class="col">
+    <img src="{% static 'img/welcome_screen.png' %}" class="full-screen-image">
   </div>
 </div>
 </body>
@@ -45,13 +59,13 @@
   <div class="container">
     <footer class="py-3 my-4">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
       </ul>
-      <p class="text-center text-body-secondary">© 2024 Company, Inc</p>
+      <p class="text-center text-muted">© 2024 Company, Inc</p>
     </footer>
   </div>
 </footer>
