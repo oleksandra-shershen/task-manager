@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+<title>Dashboard</title>
+{% endblock %}
+
+{% block tasks-toolbar-icon %}
+<img class="listTitleIcon" src="{% static 'img/dashboard.svg' %}" alt="Bootstrap" width="50" height="50">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+<div class="header-shadow">Dashboard</div>
+{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 10px;
+    }
+
+    .task-column {
+        flex: 1;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(182, 109, 255, 0.5);
+        overflow: hidden;
+        height: calc(100vh - 100px);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .task-column header {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #333;
+    }
+
+    .task-card {
+        background-color: white;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        position: relative;
+    }
+
+    .task-card:last-child {
+        margin-bottom: 0;
+    }
+
+    .task-card h4 {
+        margin-top: 0;
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.2;
+    }
+
+    .task-card p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #777;
+    }
+
+    .priority-stripe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 5px;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    .urgent {
+        background-color: #ff4136;
+    }
+
+    .low {
+        background-color: #2ecc40;
+    }
+
+    .medium {
+        background-color: #ff851b;
+    }
+
+    .high {
+        background-color: #0074d9;
+    }
+</style>
+
+<div class="dashboard-container">
+  {% for task_type, tasks in task_columns.items %}
+  <div class="task-column">
+    <header>{{ task_type }}</header>
+    <div class="task-cards-container">
+      {% for task in tasks %}
+      <div class="task-card">
+        <div class="priority-stripe {{ task.priority|lower }}"></div>
+        <h4>{{ task.name }}</h4>
+        <p>Priority: {{ task.priority }}</p>
+        <p>Deadline:
+          {% if task.deadline %}
+          {{ task.deadline|date:"Y-m-d" }}
+          {% else %}
+          Not set
+          {% endif %}
+        </p>
+      </div>
+      {% empty %}
+      <p>No tasks found in this category.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

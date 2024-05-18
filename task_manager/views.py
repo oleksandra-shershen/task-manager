@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from task_manager.forms import TaskForm, TaskUpdateForm
-from task_manager.models import Task
+from task_manager.models import Task, TaskType
 
 
 @login_required
@@ -140,6 +140,18 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
 
     def get_queryset(self):
         return Task.objects.filter(assignees=self.request.user)
+
+
+class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'task_manager/task_dashboard.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        task_columns = {}
+        for task_type in TaskType.TASK_TYPE_CHOICES:
+            task_columns[task_type[1]] = Task.objects.filter(task_type__name=task_type[0])
+        context['task_columns'] = task_columns
+        return context
 
 
 def task_summary(request):
