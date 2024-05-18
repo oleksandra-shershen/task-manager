@@ -120,9 +120,6 @@ class TaskCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
-    # TO DO
-    # Подумать над тем как обрабатывать кейсы(визуально), когда я
-    # хочу удалить не свою таску
     model = Task
     template_name = 'task_manager/task_confirm_delete.html'
     success_url = reverse_lazy('task_manager:tasks')
@@ -173,7 +170,7 @@ def calendar_view(request):
         assigned_tasks = Task.objects.filter(assignees=request.user, deadline__isnull=False)
         tasks_for_calendar = [
             {
-                'title': task.name.replace("'", "\\'").replace('"', '\\"'),  # Экранируем кавычки
+                'title': task.name.replace("'", "\\'").replace('"', '\\"'),
                 'start': task.deadline.strftime('%Y-%m-%dT%H:%M:%S'),
             }
             for task in assigned_tasks
