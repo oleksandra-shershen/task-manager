@@ -4,9 +4,12 @@ import json
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
 from task_manager.forms import TaskForm, TaskUpdateForm
 from task_manager.models import Task, TaskType
@@ -179,3 +182,14 @@ def calendar_view(request):
         tasks_for_calendar = []
     context = {'tasks_for_calendar': tasks_for_calendar}
     return render(request, 'task_manager/calendar_task.html', context)
+
+
+@require_POST
+@csrf_exempt
+def update_task_status(request):
+    task_id = request.POST.get('task_id')
+    is_completed = request.POST.get('is_completed') == 'true'
+    task = Task.objects.get(id=task_id)
+    task.is_completed = is_completed
+    task.save()
+    return JsonResponse({'status': 'success'})
