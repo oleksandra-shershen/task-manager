@@ -79,7 +79,7 @@ class Task(models.Model):
     )
 
     class Meta:
-        ordering = ["created_date"]
+        ordering = ["deadline"]
 
     def __str__(self):
         return self.name
