@@ -110,7 +110,6 @@
       <div class="task-card">
         <div class="priority-stripe {{ task.priority|lower }}"></div>
         <h4>{{ task.name }}</h4>
-        <p>Priority: {{ task.priority }}</p>
         <p>Deadline:
           {% if task.deadline %}
           {{ task.deadline|date:"Y-m-d" }}

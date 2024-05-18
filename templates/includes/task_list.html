@@ -123,14 +123,14 @@
         <div>
           <div style="display: inline-block">
             <span style="display: block">
-              <a class="me-3" href="{% url 'task_manager:task-update' pk=task.id %}">
+              <a class="me-3" href="{% url 'task_manager:task-update' pk=task.id %}" onclick="return checkPermission(event);">
                 <img src="/static/img/edit.svg" alt="Bootstrap" width="18" height="18">
               </a>
             </span>
           </div>
           <div style="display: inline-block">
             <span style="display: block">
-              <a class="me-3" href="{% url 'task_manager:task-delete' pk=task.id %}">
+              <a class="me-3" href="{% url 'task_manager:task-delete' pk=task.id %}" onclick="return checkPermission(event);">
                 <img src="/static/img/cancel.svg" alt="Bootstrap" width="25" height="25">
               </a>
             </span>
@@ -142,7 +142,24 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+function checkPermission(event) {
+    event.preventDefault();
+    Swal.fire({
+        title: 'Access Denied!',
+        text: 'You can only delete or update tasks that have been assigned to you.',
+        icon: 'error',
+        confirmButtonText: 'Close'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "{% url 'task_manager:tasks' %}";
+        }
+    });
+    return false;
+}
+
 $(document).ready(function(){
     $('.task-inactive').each(function(){
         $(this).appendTo($(this).parent());
