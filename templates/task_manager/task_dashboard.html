@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block tasks-toolbar-icon %}
-<img class="listTitleIcon" src="{% static 'img/dashboard.svg' %}" alt="Bootstrap" width="50" height="50">
+<img class="listTitleIcon" src="{% static 'img/dashboard.svg' %}" alt="Dashboard Icon" width="50" height="50">
 {% endblock %}
 
 {% block tasks-toolbar-title %}
@@ -39,7 +39,11 @@
         font-weight: bold;
         margin-bottom: 10px;
         text-align: center;
-        color: #333;
+        color: #fff;
+        background: linear-gradient(to right, #DA8CFF, #9A55FF);
+        padding: 10px 0;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .task-card {

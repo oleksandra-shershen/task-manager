@@ -182,14 +182,3 @@ def calendar_view(request):
         tasks_for_calendar = []
     context = {'tasks_for_calendar': tasks_for_calendar}
     return render(request, 'task_manager/calendar_task.html', context)
-
-
-def kanban_board(request):
-    context = {
-        'to_do': Task.objects.filter(progress='To Do'),
-        'in_progress': Task.objects.filter(progress='In Progress'),
-        'in_review': Task.objects.filter(progress='In Review'),
-        'testing': Task.objects.filter(progress='Testing'),
-        'done': Task.objects.filter(progress='Done'),
-    }
-    return render(request, 'task_manager/kanban_board.html', context)
