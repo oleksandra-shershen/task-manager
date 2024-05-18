@@ -79,7 +79,7 @@ class Task(models.Model):
     )
 
     class Meta:
-        ordering = ["deadline"]
+        ordering = ["is_completed", "deadline"]
 
     def __str__(self):
         return self.name
