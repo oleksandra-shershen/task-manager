@@ -1,9 +1,7 @@
 import datetime
-import json
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Count
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -17,49 +15,17 @@ from task_manager.models import Task, TaskType
 
 @login_required
 def index(request):
-    """
-    Renders the home page template for the task manager application.
-
-    This view requires users to be logged in using the `@login_required` decorator.
-    """
-
     return render(request, "task_manager/home_page.html")
 
 
 @login_required
 def tasks_view(request):
-    """
-    Displays a list of all tasks in the system.
-
-    This view retrieves all tasks from the Task model and renders them in the
-    "task_manager/index.html" template.
-
-    This view requires users to be logged in using the `@login_required` decorator.
-    """
     tasks = Task.objects.all()
     context = {"tasks": tasks}
     return render(request, "task_manager/index.html", context)
 
 
 class MyTaskListView(LoginRequiredMixin, generic.ListView):
-    """
-    ListView class that displays tasks assigned to the currently logged-in user.
-
-    This view retrieves tasks from the Task model and filters them based on the following criteria:
-
-    * **User:** Only tasks where the current user is included in the `assignees` field are displayed.
-    * **Completion Status:** Only uncompleted tasks (where `is_completed` is False) are included.
-    * **Search (Optional):** If a search parameter (`name`) exists in the GET request, the tasks are further
-    filtered based on the name (using case-insensitive filtering).
-
-    The view provides the following context variables to the template:
-
-    * `my_tasks`: A list of filtered tasks assigned to the logged-in user.
-    * `today_date`: The current date as a datetime.date object.
-
-    This view requires users to be logged in using the `LoginRequiredMixin`.
-    """
-
     model = Task
     template_name = "task_manager/my_task_list.html"
 
@@ -82,22 +48,6 @@ class MyTaskListView(LoginRequiredMixin, generic.ListView):
 
 
 class TodayTaskListView(LoginRequiredMixin, generic.ListView):
-    """
-    ListView class that displays tasks with deadlines set for today.
-
-    This view retrieves tasks from the Task model and filters them based on the following criteria:
-
-    * **User:** Only tasks where the current user is included in the `assignees` field are displayed.
-    * **Completion Status:** Only uncompleted tasks (where `is_completed` is False) are included.
-    * **Deadline:** Only tasks with deadlines set for the current date are included.
-
-    The view provides the following context variable to the template:
-
-    * `today_tasks`: A list of filtered tasks with deadlines set for today.
-
-    This view requires users to be logged in using the `LoginRequiredMixin`.
-    """
-
     model = Task
     template_name = "task_manager/today_task_list.html"
 
@@ -107,8 +57,11 @@ class TodayTaskListView(LoginRequiredMixin, generic.ListView):
         today = datetime.date.today()
 
         today_tasks = Task.objects.filter(
-            assignees=user, is_completed=False, deadline__year=today.year,
-            deadline__month=today.month, deadline__day=today.day
+            assignees=user,
+            is_completed=False,
+            deadline__year=today.year,
+            deadline__month=today.month,
+            deadline__day=today.day,
         ).select_related()
 
         context["today_tasks"] = today_tasks
@@ -118,14 +71,14 @@ class TodayTaskListView(LoginRequiredMixin, generic.ListView):
 class TaskCreateView(LoginRequiredMixin, generic.CreateView):
     model = Task
     form_class = TaskForm
-    template_name = 'task_manager/task_form.html'
-    success_url = reverse_lazy('task_manager:tasks')
+    template_name = "task_manager/task_form.html"
+    success_url = reverse_lazy("task_manager:tasks")
 
 
 class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Task
-    template_name = 'task_manager/task_confirm_delete.html'
-    success_url = reverse_lazy('task_manager:tasks')
+    template_name = "task_manager/task_confirm_delete.html"
+    success_url = reverse_lazy("task_manager:tasks")
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -135,7 +88,7 @@ class TaskDeleteView(LoginRequiredMixin, generic.DeleteView):
 class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Task
     form_class = TaskUpdateForm
-    template_name = 'task_manager/task_update_form.html'
+    template_name = "task_manager/task_update_form.html"
     success_url = reverse_lazy("task_manager:tasks")
 
     def get_queryset(self):
@@ -143,56 +96,61 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 
 class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
-    template_name = 'task_manager/task_dashboard.html'
+    template_name = "task_manager/task_dashboard.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         task_columns = {}
         for task_type in TaskType.TASK_TYPE_CHOICES:
             task_columns[task_type[1]] = Task.objects.filter(
-                task_type__name=task_type[0],
-                is_completed=False
+                task_type__name=task_type[0], is_completed=False
             )
-        context['task_columns'] = task_columns
+        context["task_columns"] = task_columns
         return context
 
 
 def task_summary(request):
-    num_urgent_tasks = Task.objects.filter(priority='Urgent').count()
-    num_low_tasks = Task.objects.filter(priority='Low').count()
-    num_medium_tasks = Task.objects.filter(priority='Medium').count()
-    num_high_tasks = Task.objects.filter(priority='High').count()
+    num_urgent_tasks = Task.objects.filter(priority="Urgent").count()
+    num_low_tasks = Task.objects.filter(priority="Low").count()
+    num_medium_tasks = Task.objects.filter(priority="Medium").count()
+    num_high_tasks = Task.objects.filter(priority="High").count()
 
-    return render(request, 'task_manager/overview.html', {
-        'num_urgent_tasks': num_urgent_tasks,
-        'num_low_tasks': num_low_tasks,
-        'num_medium_tasks': num_medium_tasks,
-        'num_high_tasks': num_high_tasks,
-    })
+    return render(
+        request,
+        "task_manager/overview.html",
+        {
+            "num_urgent_tasks": num_urgent_tasks,
+            "num_low_tasks": num_low_tasks,
+            "num_medium_tasks": num_medium_tasks,
+            "num_high_tasks": num_high_tasks,
+        },
+    )
 
 
 def calendar_view(request):
     if request.user.is_authenticated:
-        assigned_tasks = Task.objects.filter(assignees=request.user, deadline__isnull=False)
+        assigned_tasks = Task.objects.filter(
+            assignees=request.user, deadline__isnull=False
+        )
         tasks_for_calendar = [
             {
-                'title': task.name.replace("'", "\\'").replace('"', '\\"'),
-                'start': task.deadline.strftime('%Y-%m-%dT%H:%M:%S'),
+                "title": task.name.replace("'", "\\'").replace('"', '\\"'),
+                "start": task.deadline.strftime("%Y-%m-%dT%H:%M:%S"),
             }
             for task in assigned_tasks
         ]
     else:
         tasks_for_calendar = []
-    context = {'tasks_for_calendar': tasks_for_calendar}
-    return render(request, 'task_manager/calendar_task.html', context)
+    context = {"tasks_for_calendar": tasks_for_calendar}
+    return render(request, "task_manager/calendar_task.html", context)
 
 
 @require_POST
 @csrf_exempt
 def update_task_status(request):
-    task_id = request.POST.get('task_id')
-    is_completed = request.POST.get('is_completed') == 'true'
+    task_id = request.POST.get("task_id")
+    is_completed = request.POST.get("is_completed") == "true"
     task = Task.objects.get(id=task_id)
     task.is_completed = is_completed
     task.save()
-    return JsonResponse({'status': 'success'})
+    return JsonResponse({"status": "success"})
