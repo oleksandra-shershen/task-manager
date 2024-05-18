@@ -32,7 +32,6 @@ urlpatterns = [
         name="task-update"
     ),
     path("tasks/<int:pk>/", TaskDetailView.as_view(), name="task-detail"),
-    path("tasks/overview/", task_summary, name="overview"),
     path("tasks/calendar/", calendar_view, name="calendar"),
     path(
         "tasks/dashboard/",

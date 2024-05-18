@@ -115,24 +115,6 @@ class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-def task_summary(request):
-    num_urgent_tasks = Task.objects.filter(priority="Urgent").count()
-    num_low_tasks = Task.objects.filter(priority="Low").count()
-    num_medium_tasks = Task.objects.filter(priority="Medium").count()
-    num_high_tasks = Task.objects.filter(priority="High").count()
-
-    return render(
-        request,
-        "task_manager/overview.html",
-        {
-            "num_urgent_tasks": num_urgent_tasks,
-            "num_low_tasks": num_low_tasks,
-            "num_medium_tasks": num_medium_tasks,
-            "num_high_tasks": num_high_tasks,
-        },
-    )
-
-
 def calendar_view(request):
     if request.user.is_authenticated:
         assigned_tasks = Task.objects.filter(
