@@ -1,23 +1,48 @@
+<style>
+    .task-container {
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .gradient-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        background: linear-gradient(to right, #DA8CFF, #9A55FF);
+        transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        margin-right: 20px;
+    }
+</style>
+
 {% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">{{ task.name }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Priority: {{ task.get_priority_display }}</h6>
-        <p class="card-text">Description: {{ task.description }}</p>
-        <p>Type: {{ task.task_type.name }}</p>
-        <p>Deadline: {{ task.deadline|date:"D, M d, Y" }}</p>
-        <p>Assigned to:
-            <ul>
-            {% for worker in task.assignees.all %}
-                <li>{{ worker.get_full_name }}</li>
-            {% endfor %}
-            </ul>
-        </p>
-        <a href="{% url 'task_manager:task-update' task.id %}" class="btn btn-primary">Edit</a>
-        <a href="{% url 'task_manager:task-delete' task.id %}" class="btn btn-danger">Delete</a>
-    </div>
+<div class="task-container card">
+  <div class="card-body">
+    <h3 class="card-title">{{ task.name }}</h3>
+    <p> Priority: {{ task.get_priority_display }}</p>
+    <p class="card-text">Description: {{ task.description }}</p>
+    <p>Type: {{ task.task_type.name }}</p>
+    <p>Deadline: {{ task.deadline|date:"D, M d, Y" }}</p>
+    <p>Assigned to:
+    <ul>
+      {% for worker in task.assignees.all %}
+      <li>{{ worker.get_full_name }}</li>
+      {% endfor %}
+    </ul>
+    </p>
+  </div>
+</div>
+<div class="mt-3">
+  <a href="{% url 'task_manager:tasks' %}" class="gradient-btn">Back to tasks list</a>
+
 </div>
 {% endblock %}
