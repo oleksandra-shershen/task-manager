@@ -9,7 +9,6 @@ from task_manager.views import (
     TaskDeleteView,
     TaskUpdateView,
     TaskDashboardView,
-    task_summary,
     calendar_view,
     update_task_status,
     TaskDetailView,
