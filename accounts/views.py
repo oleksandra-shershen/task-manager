@@ -62,9 +62,14 @@ class UserProfileView(LoginRequiredMixin, generic.TemplateView):
         user = self.request.user
         context['user'] = user
         context['profile'] = user.profile if hasattr(user, 'profile') else None
+
         task_types = TaskType.objects.all()
         context['task_counts'] = {
             task_type.name: Task.objects.filter(task_type=task_type, assignees=user).count()
             for task_type in task_types
         }
+
+        context['completed_tasks_count'] = Task.objects.filter(assignees=user, is_completed=True).count()
+        context['uncompleted_tasks_count'] = Task.objects.filter(assignees=user, is_completed=False).count()
+
         return context
