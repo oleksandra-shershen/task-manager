@@ -45,6 +45,11 @@
           border-color: #DA8CFF;
       }
 
+      .btn-login:hover {
+          background-color: #DA8CFF;
+          border-color: #DA8CFF;
+      }
+
       #signup-link {
           text-align: center;
           margin-top: 20px;
@@ -60,7 +65,9 @@
       {{ form|crispy }}
     </div>
     <div class="d-grid">
-      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit" style="margin-top: 20px">Log in</button>
+      <button class="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2" type="submit"
+              style="margin-top: 20px">Log in
+      </button>
     </div>
     <div id="signup-link">
       <p style="margin-top: 10px;">Don't have an account? <a href="{% url 'accounts:register' %}">Sign up</a></p>
