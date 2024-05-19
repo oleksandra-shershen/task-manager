@@ -23,7 +23,7 @@
 
       .gradient-btn {
           display: inline-block;
-          padding: 10px 20px;
+          padding: 5px 10px;
           font-size: 16px;
           font-weight: bold;
           color: #DA8CFF;
@@ -31,23 +31,20 @@
           text-align: center;
           border-radius: 5px;
           background-color: #ffffff;
-          border: 2px solid #DA8CFF;
-          height: 45px;
+          border: 1px solid #DA8CFF;
+          margin-right: 15px;
       }
   </style>
 </head>
 <body>
-<div class="px-3 py-2 border-bottom mb-0">
-  <div class="container d-flex flex-wrap justify-content-between align-items-center">
+<div class="navbar">
     <div>
-      <img src="{% static 'img/logo.svg' %}" class="logo">
+        <img src="{% static 'img/logo.svg' %}" class="logo">
     </div>
-
-    <div style="margin-left: auto">
-      <a href="{% url 'accounts:login' %}" class="gradient-btn">Log In</a>
-      <a href="{% url 'accounts:login' %}" class="gradient-btn">Sign Up</a>
+    <div class="nav-right">
+        <a href="{% url 'accounts:login' %}" class="gradient-btn">Log In</a>
+        <a href="{% url 'accounts:register' %}" class="gradient-btn">Sign Up</a>
     </div>
-  </div>
 </div>
 <div class="container d-flex justify-content-center vh-100">
   <div class="col">
