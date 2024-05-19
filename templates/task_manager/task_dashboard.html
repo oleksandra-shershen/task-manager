@@ -78,8 +78,11 @@
         color: white;
         font-weight: bold;
     }
+    .deadline.past {
+        background-color: #ff4136; /* Red for past deadlines */
+    }
     .deadline.today {
-        background-color: #ff4136; /* Red for today's deadline */
+        background-color: #ff851b; /* Orange for today's deadlines */
     }
     .deadline.upcoming {
         background-color: #2ecc40; /* Green for future deadlines */
@@ -127,7 +130,7 @@
         <p>
           {% if task.deadline %}
           {% now "Y-m-d" as today %}
-          <span class="deadline {% if task.deadline|date:"Y-m-d" == today %}today{% else %}upcoming{% endif %}">
+          <span class="deadline {% if task.deadline|date:"Y-m-d" < today %}past{% elif task.deadline|date:"Y-m-d" == today %}today{% else %}upcoming{% endif %}">
           <img src="{% static 'img/white_clock.svg' %}" alt="Calendar Icon" style="vertical-align: center; horiz-align:center; width: 22px; height: 22px;">
             {{ task.deadline|date:"d M" }}
           </span>
