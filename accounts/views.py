@@ -4,7 +4,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import generic
 
-from accounts.forms import WorkerRegistrationForm, LoginForm
+from accounts.forms import WorkerRegistrationForm, LoginForm, UserForm, ProfileForm
+from accounts.models import Profile
 from task_manager.models import Worker, TaskType, Task
 
 
@@ -73,3 +74,41 @@ class UserProfileView(LoginRequiredMixin, generic.TemplateView):
         context['uncompleted_tasks_count'] = Task.objects.filter(assignees=user, is_completed=False).count()
 
         return context
+
+
+class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
+    template_name = 'accounts/user_profile_update_form.html'
+    form_class = UserForm
+    second_form_class = ProfileForm
+
+    def get_object(self):
+        return self.request.user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        profile, created = Profile.objects.get_or_create(worker=user)  # Ensure profile exists
+        context['profile'] = profile
+        if 'profile_form' not in context:
+            context['profile_form'] = self.second_form_class(instance=profile)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        profile_form = self.second_form_class(request.POST, instance=request.user.profile)
+
+        if form.is_valid() and profile_form.is_valid():
+            return self.form_valid(form, profile_form)
+        else:
+            return self.form_invalid(form, profile_form)
+
+    def form_valid(self, form, profile_form):
+        form.save()
+        profile_form.save()
+        return redirect(reverse('accounts:user_profile'))  # Redirect to the profile page
+
+    def form_invalid(self, form, profile_form):
+        return self.render_to_response(
+            self.get_context_data(form=form, profile_form=profile_form)
+        )
