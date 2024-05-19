@@ -1,12 +1,15 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import generic
+from django.contrib import messages
 
 from accounts.forms import WorkerRegistrationForm, LoginForm, UserForm, ProfileForm
 from accounts.models import Profile
 from task_manager.models import Worker, TaskType, Task
+
+User = get_user_model()
 
 
 def login_view(request):
@@ -112,3 +115,16 @@ class UserProfileUpdateView(LoginRequiredMixin, generic.UpdateView):
         return self.render_to_response(
             self.get_context_data(form=form, profile_form=profile_form)
         )
+
+
+class UserDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = User
+    template_name = 'accounts/user_delete_confirm.html'
+    success_url = reverse_lazy('task_manager:index')  # Redirect to the home page or a custom page after deletion
+
+    def get_object(self):
+        return self.request.user
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, "Your account has been deleted.")
+        return super(UserDeleteView, self).delete(request, *args, **kwargs)
