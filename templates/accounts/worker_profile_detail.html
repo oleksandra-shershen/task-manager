@@ -30,7 +30,7 @@
                             </tr>
                             <tr>
                                 <th>Main Language</th>
-                                <td>{{ worker.profile.main_programming_language }}</td>
+                                <td>{{ worker.profile.main_programming_language| default:"Not specified"}}</td>
                             </tr>
                             <tr>
                                 <th>Phone</th>
