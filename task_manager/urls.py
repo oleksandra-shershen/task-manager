@@ -8,10 +8,11 @@ from task_manager.views import (
     TaskCreateView,
     TaskDeleteView,
     TaskUpdateView,
+    TaskDetailView,
     TaskDashboardView,
+    WorkersListView,
     calendar_view,
     update_task_status,
-    TaskDetailView,
 )
 
 urlpatterns = [
@@ -37,6 +38,7 @@ urlpatterns = [
         TaskDashboardView.as_view(),
         name="task-dashboard"
     ),
+    path("tasks/workers/", WorkersListView.as_view(), name="workers-list"),
     path(
         "tasks/update-task-status/",
         update_task_status,

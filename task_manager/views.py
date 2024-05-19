@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
 from task_manager.forms import TaskForm, TaskUpdateForm
-from task_manager.models import Task, TaskType
+from task_manager.models import Task, TaskType, Worker
 
 
 @login_required
@@ -113,6 +113,12 @@ class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
             )
         context["task_columns"] = task_columns
         return context
+
+
+class WorkersListView(LoginRequiredMixin, generic.ListView):
+    model = Worker
+    template_name = 'task_manager/workers_list.html'
+    context_object_name = 'workers'
 
 
 def calendar_view(request):

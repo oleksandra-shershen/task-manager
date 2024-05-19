@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="/static/img/people.svg" alt="Bootstrap" width="50" height="50">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+    Workers
+{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex align-items-center overflow-auto">
+    {% for worker in workers %}
+        <div class="card p-4 me-5" style="height: 290px; width: 290px">
+            <div class="user text-center" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <div class="profile">
+                    <div class="initials-circle" style="width: 80px; height: 80px; background-color: #B66DFF; color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 30px; font-weight: bold;">
+                        {{ worker.first_name|first|upper }}{{ worker.last_name|first|upper }}
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 text-center">
+                <h4 class="mb-2">{{ worker.get_full_name }}</h4>
+                <span class="text-muted d-block">
+                    {% if worker.position %}
+                        {{ worker.position.name }}
+                    {% else %}
+                        None
+                    {% endif %}
+                </span>
+                <a href="https://github.com/{{ worker.username }}" class="text-muted d-block mb-3">Github</a>
+                <a href="#" class="btn addTaskButton">View Profile</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

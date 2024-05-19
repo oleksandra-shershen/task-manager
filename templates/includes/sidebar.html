@@ -47,7 +47,7 @@
     <li><a href="{% url 'task_manager:my-task' %}"><img src="{% static 'img/my_tasks.svg' %}" alt="My Tasks" height="22" width="22"> My Tasks</a></li>
     <li><a href="{% url 'task_manager:today-task' %}"><img src="{% static 'img/clock.svg' %}" alt="Deadline" height="22" width="22"> Today deadline</a>
     </li>
-    <li><a href="#"><img src="{% static 'img/people.svg' %}" alt="Workers" height="22" width="22"> Workers</a></li>
+    <li><a href="{% url 'task_manager:workers-list' %}"><img src="{% static 'img/people.svg' %}" alt="Workers" height="22" width="22"> Workers</a></li>
   </ul>
   <hr>
   <div class="user-info">
