@@ -24,7 +24,8 @@
 {% extends "base.html" %}
 {% block content %}
 <div style="text-align: left;">
-    <h2>Are you sure you want to delete "{{ object.name }}"?</h2>
+    <h1>Confirm Task Deletion</h1>
+    <p>Are you sure you want to delete "{{ object.name }}"?</p>
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="button confirm-button">Confirm</button>
