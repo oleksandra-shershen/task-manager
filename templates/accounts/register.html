@@ -10,7 +10,7 @@
   {% load static %}
   <style>
       body {
-          background-image: url("{% static 'img/back_login.png' %}");
+          background-image: url("{% static 'img/back_login.svg' %}");
           background-size: cover;
           background-position: center;
           height: 100vh;
@@ -38,13 +38,13 @@
           font-size: 0.9rem;
           letter-spacing: 0.05rem;
           padding: 0.75rem 1rem;
-          background-color: #7B68EE;
-          border-color: #7B68EE;
+          background-color: #DA8CFF;
+          border-color: #DA8CFF;
       }
 
       .btn-register:hover {
-          background-color: #6A5ACD;
-          border-color: #6A5ACD;
+          background-color: #DA8CFF;
+          border-color: #DA8CFF;
       }
 
       #signin-link {
@@ -61,12 +61,11 @@
     <div class="text-start">
       {{ form|crispy }}
     </div>
-
     <div class="d-grid">
       <button class="btn btn-lg btn-primary btn-register text-uppercase fw-bold mb-2" type="submit">Sign up</button>
     </div>
     <div id="signin-link">
-      <p style="margin-top: 10px;">Already have an account? <a href="#">Sign in</a></p>
+      <p style="margin-top: 10px;">Already have an account? <a href="{% url 'accounts:login' %}">Log in</a></p>
     </div>
   </form>
 </div>
