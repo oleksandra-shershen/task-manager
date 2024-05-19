@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="/static/img/person_info.svg" alt="Bootstrap" width="50" height="50">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+    Profile
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ worker.first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Last name</th>
+                                <td>{{ worker.last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Username</th>
+                                <td>{{ worker.username }}</td>
+                            </tr>
+                            <tr>
+                                <th>Main Language</th>
+                                <td>{{ worker.profile.main_programming_language }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phone</th>
+                                <td>{{ worker.profile.phone|default:"Not specified" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Email</th>
+                                <td>{{ worker.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Position</th>
+                                <td>
+                                    {% if worker.position %}
+                                        {{ worker.position.name }}
+                                    {% else %}
+                                        No position specified
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

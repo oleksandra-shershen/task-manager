@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views import generic
 
 from accounts.forms import WorkerRegistrationForm, LoginForm
+from task_manager.models import Worker
 
 
 def login_view(request):
@@ -43,3 +45,10 @@ def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('accounts:login')
+
+
+class WorkerProfileDetailView(LoginRequiredMixin, generic.DetailView):
+    """DetailView class for user profile page."""
+
+    model = Worker
+    template_name = "accounts/worker_profile_detail.html"
