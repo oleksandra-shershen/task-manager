@@ -24,12 +24,11 @@
 {% extends "base.html" %}
 {% block content %}
 <div style="text-align: left;">
-  <h1>Confirm Account Deletion</h1>
-  <p>Are you sure you want to delete "{{ object.name }}"?</p>
-  <form method="post">
-    {% csrf_token %}
-    <button type="submit" class="button confirm-button">Confirm</button>
-    <a href="{% url 'task_manager:tasks' %}" class="button cancel-button">Cancel</a>
-  </form>
+    <h2>Are you sure you want to delete "{{ object.name }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button confirm-button">Confirm</button>
+        <a href="{% url 'task_manager:tasks' %}" class="button cancel-button">Cancel</a>
+    </form>
 </div>
 {% endblock %}
