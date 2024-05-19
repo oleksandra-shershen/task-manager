@@ -22,7 +22,7 @@
 
     .disabled-btn {
         background: #CCCCCC;
-        color: #666666;
+        color: #ffffff;
         cursor: not-allowed;
     }
 
@@ -32,29 +32,33 @@
 {% load static %}
 
 {% block content %}
+<div class="mt-3">
+    <a href="{% url 'task_manager:tasks' %}">
+        <img src="{% static 'img/back.svg' %}" alt="Back" width="50" height="50" style="margin-bottom: 20px">
+    </a>
+</div>
 <div class="task-container card">
-  <div class="card-body">
-    <h3 class="card-title">{{ task.name }}</h3>
-    <p>Priority: {{ task.get_priority_display }}</p>
-    <p class="card-text">Description: {{ task.description }}</p>
-    <p>Type: {{ task.task_type.name }}</p>
-    <p>Deadline: {{ task.deadline|date:"D, M d, Y" }}</p>
-    <p>Assigned to:
-      <ul>
-        {% for worker in task.assignees.all %}
-        <li>{{ worker.get_full_name }}</li>
-        {% endfor %}
-      </ul>
-    </p>
-  </div>
+    <div class="card-body">
+        <h3 class="card-title">{{ task.name }}</h3>
+        <p>Priority: {{ task.get_priority_display }}</p>
+        <p class="card-text">Description: {{ task.description }}</p>
+        <p>Type: {{ task.task_type.name }}</p>
+        <p>Deadline: {{ task.deadline|date:"D, M d, Y" }}</p>
+        <p>Assigned to:
+            <ul>
+                {% for worker in task.assignees.all %}
+                <li>{{ worker.get_full_name }}</li>
+                {% endfor %}
+            </ul>
+        </p>
+    </div>
 </div>
 <div class="mt-3">
-  <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-update' pk=task.id %}
-  {% else %}#{% endif %}"
-     class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Update task</a>
-  <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-delete' pk=task.id %}
-  {% else %}#{% endif %}"
-     class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Delete task</a>
-  <a href="{% url 'task_manager:tasks' %}" class="gradient-btn">Back to tasks list</a>
+    <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-update' pk=task.id %}
+    {% else %}#{% endif %}"
+       class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Update task</a>
+    <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-delete' pk=task.id %}
+    {% else %}#{% endif %}"
+       class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Delete task</a>
 </div>
 {% endblock %}
