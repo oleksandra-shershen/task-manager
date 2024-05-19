@@ -10,3 +10,9 @@ class WorkerRegistrationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = Worker
         fields = ['username', 'first_name', 'last_name', 'email', 'position']
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(label='Username', max_length=100,
+                               widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
