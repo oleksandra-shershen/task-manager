@@ -32,7 +32,7 @@
 {% load static %}
 
 {% block tasks-toolbar-icon %}
-    <img class="listTitleIcon" src="{% static 'img/task_details.svg' %}" alt="Bootstrap" width="50" height="50">
+    <img class="listTitleIcon" src="{% static 'img/task_details.svg' %}" alt="Task Details" width="50" height="50">
 {% endblock %}
 
 {% block tasks-toolbar-title %}
@@ -92,8 +92,10 @@
                 </div>
             </div>
             <div class="mt-3">
-                <a href="{% url 'task_manager:task-update' pk=task.id %}" class="gradient-btn">Update Task</a>
-                <a href="{% url 'task_manager:task-delete' pk=task.id %}" class="gradient-btn">Delete Task</a>
+                <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-update' pk=task.id %}
+                {% else %}#{% endif %}" class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Update task</a>
+                <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-delete' pk=task.id %}
+                {% else %}#{% endif %}" class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Delete task</a>
             </div>
         </div>
     </div>
