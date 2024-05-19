@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views import generic
 
 from accounts.forms import WorkerRegistrationForm, LoginForm
-from task_manager.models import Worker
+from task_manager.models import Worker, TaskType, Task
 
 
 def login_view(request):
@@ -52,3 +52,19 @@ class WorkerProfileDetailView(LoginRequiredMixin, generic.DetailView):
 
     model = Worker
     template_name = "accounts/worker_profile_detail.html"
+
+
+class UserProfileView(LoginRequiredMixin, generic.TemplateView):
+    template_name = 'accounts/user_profile_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        context['user'] = user
+        context['profile'] = user.profile if hasattr(user, 'profile') else None
+        task_types = TaskType.objects.all()
+        context['task_counts'] = {
+            task_type.name: Task.objects.filter(task_type=task_type, assignees=user).count()
+            for task_type in task_types
+        }
+        return context

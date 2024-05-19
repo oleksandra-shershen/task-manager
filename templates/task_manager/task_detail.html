@@ -31,34 +31,71 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="{% static 'img/task_details.svg' %}" alt="Bootstrap" width="50" height="50">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+    Task Details
+{% endblock %}
+
 {% block content %}
-<div class="mt-3">
-    <a href="{% url 'task_manager:tasks' %}">
-        <img src="{% static 'img/back.svg' %}" alt="Back" width="50" height="50" style="margin-bottom: 20px">
-    </a>
-</div>
-<div class="task-container card">
-    <div class="card-body">
-        <h3 class="card-title">{{ task.name }}</h3>
-        <p>Priority: {{ task.get_priority_display }}</p>
-        <p class="card-text">Description: {{ task.description }}</p>
-        <p>Type: {{ task.task_type.name }}</p>
-        <p>Deadline: {{ task.deadline|date:"D, M d, Y" }}</p>
-        <p>Assigned to:
-            <ul>
-                {% for worker in task.assignees.all %}
-                <li>{{ worker.get_full_name }}</li>
-                {% endfor %}
-            </ul>
-        </p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Name</th>
+                                <td>{{ task.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Priority</th>
+                                <td>{{ task.get_priority_display }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ task.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Type</th>
+                                <td>{{ task.task_type.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Deadline</th>
+                                <td>{{ task.deadline|date:"D, M d, Y" }}</td>
+                            </tr>
+                            <tr>
+                                <th>Status</th>
+                                <td>
+                                    {% if task.is_completed %}
+                                        Completed
+                                    {% else %}
+                                        In Progress
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Assignees</th>
+                                <td>
+                                    <ul>
+                                        {% for worker in task.assignees.all %}
+                                            <li>{{ worker.get_full_name }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="mt-3">
+                <a href="{% url 'task_manager:task-update' pk=task.id %}" class="gradient-btn">Update Task</a>
+                <a href="{% url 'task_manager:task-delete' pk=task.id %}" class="gradient-btn">Delete Task</a>
+            </div>
+        </div>
     </div>
-</div>
-<div class="mt-3">
-    <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-update' pk=task.id %}
-    {% else %}#{% endif %}"
-       class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Update task</a>
-    <a href="{% if request.user in task.assignees.all %}{% url 'task_manager:task-delete' pk=task.id %}
-    {% else %}#{% endif %}"
-       class="gradient-btn {% if request.user not in task.assignees.all %}disabled-btn{% endif %}">Delete task</a>
 </div>
 {% endblock %}
