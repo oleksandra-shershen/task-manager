@@ -6,7 +6,7 @@ from accounts.views import (
     logout_view,
     WorkerProfileDetailView,
     UserProfileView,
-    UserProfileUpdateView
+    UserProfileUpdateView, UserDeleteView
 )
 
 urlpatterns = [
@@ -14,7 +14,8 @@ urlpatterns = [
     path('register/', register_worker, name='register'),
     path('logout/', logout_view, name='logout'),
     path("user/profile/<int:pk>", WorkerProfileDetailView.as_view(), name="worker-profile-detail"),
-    path('profile/', UserProfileView.as_view(), name='user_profile'),
+    path('profile/', UserProfileView.as_view(), name='user-profile'),
     path('profile/update/', UserProfileUpdateView.as_view(), name='profile_update'),
+    path('profile/delete/', UserDeleteView.as_view(), name='profile_delete'),
 ]
 app_name = "accounts"

@@ -25,11 +25,11 @@
 {% block content %}
 <div style="text-align: left;">
   <h1>Confirm Account Deletion</h1>
-  <p>Are you sure you want to delete "{{ object.name }}"?</p>
+  <p>Are you sure you want to delete your account?</p>
   <form method="post">
     {% csrf_token %}
     <button type="submit" class="button confirm-button">Confirm</button>
-    <a href="{% url 'task_manager:tasks' %}" class="button cancel-button">Cancel</a>
+    <a href="{% url 'accounts:user-profile' %}" class="button cancel-button">Cancel</a>
   </form>
 </div>
 {% endblock %}
