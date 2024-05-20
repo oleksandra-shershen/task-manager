@@ -24,13 +24,13 @@ class TaskFormTest(TestCase):
         form = TaskForm()
         self.assertIsNone(
             form.instance.pk
-        )  # проверяем, что форма не связана с существующим экземпляром
+        )
 
     def test_task_form_init_with_instance(self):
         form = TaskForm(instance=self.task)
         self.assertEqual(
             form.instance.pk, self.task.pk
-        )  # проверяем, что форма связана с правильным экземпляром
+        )
 
     def test_task_form_valid_data(self):
         form = TaskForm(
@@ -48,7 +48,7 @@ class TaskFormTest(TestCase):
     def test_task_form_invalid_data(self):
         form = TaskForm(
             data={
-                "name": "",  # недопустимое значение
+                "name": "",
                 "description": "New description",
                 "priority": "Medium",
                 "task_type": self.task_type.pk,

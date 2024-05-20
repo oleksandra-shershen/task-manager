@@ -7,17 +7,12 @@ from datetime import date
 
 class ViewTestCase(TestCase):
     def setUp(self):
-        # Создание пользователя
         self.user = get_user_model().objects.create_user(
             username="testuser", password="12345"
         )
         self.client = Client()
         self.client.login(username="testuser", password="12345")
-
-        # Создание типа задачи
         self.task_type = TaskType.objects.create(name="Bug")
-
-        # Создание задачи
         self.task = Task.objects.create(
             name="Test Task",
             priority="High",

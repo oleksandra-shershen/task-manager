@@ -31,7 +31,7 @@ class AdminTest(TestCase):
         url = reverse("admin:task_manager_worker_changelist")
         response = self.client.get(url)
         self.assertContains(response, "worker1")
-        self.assertContains(response, "Developer")  # Позиция работника
+        self.assertContains(response, "Developer")
 
     def test_admin_position_list_display(self):
         url = reverse("admin:task_manager_position_changelist")
