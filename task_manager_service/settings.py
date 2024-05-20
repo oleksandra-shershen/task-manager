@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     "task_manager",
     "crispy_forms",
     "crispy_bootstrap4",
-    'bootstrap_datepicker_plus',
-    'phonenumber_field',
+    "bootstrap_datepicker_plus",
+    "phonenumber_field",
     "debug_toolbar",
 ]
 
