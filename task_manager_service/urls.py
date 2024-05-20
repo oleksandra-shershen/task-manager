@@ -20,4 +20,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("task_manager.urls", namespace="task-manager")),
     path("accounts/", include("accounts.urls", namespace="accounts")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]

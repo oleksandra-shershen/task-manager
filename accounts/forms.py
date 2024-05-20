@@ -13,7 +13,7 @@ class WorkerRegistrationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = Worker
-        fields = ['username', 'first_name', 'last_name', 'email', 'position']
+        fields = ["username", "first_name", "last_name", "email", "position"]
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -25,18 +25,24 @@ class WorkerRegistrationForm(UserCreationForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=100,
-                               widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(label='Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    username = forms.CharField(
+        label="Username",
+        max_length=100,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    password = forms.CharField(
+        label="Password",
+        widget=forms.PasswordInput(attrs={"class": "form-control"})
+    )
 
 
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'position']
+        fields = ["first_name", "last_name", "email", "username", "position"]
 
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['phone', 'main_programming_language']
+        fields = ["phone", "main_programming_language"]

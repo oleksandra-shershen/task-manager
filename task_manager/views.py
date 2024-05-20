@@ -97,8 +97,8 @@ class TaskUpdateView(LoginRequiredMixin, generic.UpdateView):
 
 class TaskDetailView(LoginRequiredMixin, generic.DetailView):
     model = Task
-    template_name = 'task_manager/task_detail.html'
-    context_object_name = 'task'
+    template_name = "task_manager/task_detail.html"
+    context_object_name = "task"
 
 
 class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
@@ -117,8 +117,8 @@ class TaskDashboardView(LoginRequiredMixin, generic.TemplateView):
 
 class WorkersListView(LoginRequiredMixin, generic.ListView):
     model = Worker
-    template_name = 'task_manager/workers_list.html'
-    context_object_name = 'workers'
+    template_name = "task_manager/workers_list.html"
+    context_object_name = "workers"
 
 
 def calendar_view(request):

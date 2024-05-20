@@ -6,10 +6,17 @@ from task_manager.models import Task
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'description', 'priority', 'deadline', 'task_type', 'assignees']
+        fields = [
+            "name",
+            "description",
+            "priority",
+            "deadline",
+            "task_type",
+            "assignees",
+        ]
         widgets = {
-            'assignees': forms.CheckboxSelectMultiple(),
-            'deadline': DatePickerInput(),
+            "assignees": forms.CheckboxSelectMultiple(),
+            "deadline": DatePickerInput(),
             "description": forms.widgets.Textarea(attrs={"rows": "3"}),
         }
 
@@ -17,9 +24,16 @@ class TaskForm(forms.ModelForm):
 class TaskUpdateForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['name', 'description', 'priority', 'deadline', 'task_type', 'assignees']
+        fields = [
+            "name",
+            "description",
+            "priority",
+            "deadline",
+            "task_type",
+            "assignees",
+        ]
         widgets = {
-            'assignees': forms.CheckboxSelectMultiple(),
-            'deadline': DatePickerInput(),
+            "assignees": forms.CheckboxSelectMultiple(),
+            "deadline": DatePickerInput(),
             "description": forms.widgets.Textarea(attrs={"rows": "3"}),
         }

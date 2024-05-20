@@ -13,7 +13,11 @@ class AdminTask(admin.ModelAdmin):
         "priority",
         "task_type"
     ]
-    list_filter = ("assignees", "priority", "task_type",)
+    list_filter = (
+        "assignees",
+        "priority",
+        "task_type",
+    )
 
 
 @admin.register(Worker)
