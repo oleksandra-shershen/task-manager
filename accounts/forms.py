@@ -15,14 +15,6 @@ class WorkerRegistrationForm(UserCreationForm):
         model = Worker
         fields = ["username", "first_name", "last_name", "email", "position"]
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.is_superuser = True
-        user.is_staff = True
-        if commit:
-            user.save()
-        return user
-
 
 class LoginForm(forms.Form):
     username = forms.CharField(
