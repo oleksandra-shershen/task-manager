@@ -48,8 +48,8 @@ This command creates and checks out a new branch called 'develop', which is typi
 3. **Set up a Python virtual environment:**
 ```bash
 python3 -m venv venv
-source venv/bin/activate (for UNIX)
-venv\Scripts\activate (for Windows)
+source venv/bin/activate # for UNIX
+venv\Scripts\activate # for Windows
 ```
 Creating a virtual environment isolates your Python/Django setup on a per-project basis, ensuring that dependencies from different projects do not conflict.
 
