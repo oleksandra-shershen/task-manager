@@ -83,6 +83,7 @@ python manage.py createsuperuser
 ```
 Follow the prompts to create a superuser account. This step is optional but recommended if you need to access the Django admin interface to manage the application.
 
+# 
 Each of these steps helps set up the Task Manager project in a development environment, making it ready for use and further development.
 
 # DB Structure:
