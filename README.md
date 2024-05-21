@@ -59,18 +59,29 @@ pip install -r requirements.txt
 ```
 This command installs all the necessary Python packages defined in the requirements.txt file to run the project.
 
-5. **Run database migrations:**
+5. **Configure environment variables:**
+```bash
+cp .env.example .env  # Remember to fill it with your settings
+```
+Copy the .env.example file to a new file named .env and modify it with your settings. The .env file will contain environment-specific variables.
+
+6. **Run database migrations:**
 ```bash
 python manage.py migrate
 ```
 This command applies database migrations to your DBMS. It's essential for setting up or updating your database schema.
 
-6. **Start the Django development server:**
+7. **Start the Django development server:**
 ```bash
 python manage.py runserver
 ```
 Launches the Django development server, allowing you to access the web application via http://127.0.0.1:8000/ in your web browser.
 
+8. **(Optional) Create a Django superuser:**
+```bash
+python manage.py createsuperuser
+```
+Follow the prompts to create a superuser account. This step is optional but recommended if you need to access the Django admin interface to manage the application.
 
 Each of these steps helps set up the Task Manager project in a development environment, making it ready for use and further development.
 
