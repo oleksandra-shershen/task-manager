@@ -86,7 +86,7 @@ Follow the prompts to create a superuser account. This step is optional but reco
 # 
 Each of these steps helps set up the Task Manager project in a development environment, making it ready for use and further development.
 
-# DB Structure:
+## DB Structure:
 ![image](https://github.com/oleksandra-shershen/task-manager/assets/105819546/6e5cda7d-bb3b-4e29-a8d0-d18f9d796ce5)
 [Link](https://dbdiagram.io/d/task-manager-661cd94d03593b6b61fd9694) to the diagram
 
