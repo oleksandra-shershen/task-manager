@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "crispy_bootstrap4",
     "bootstrap_datepicker_plus",
     "phonenumber_field",
-    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
