@@ -39,12 +39,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
-    "task_manager",
     "crispy_forms",
     "crispy_bootstrap4",
     "bootstrap_datepicker_plus",
     "phonenumber_field",
+    "accounts",
+    "task_manager",
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "task_manager_service.urls"
@@ -155,5 +154,5 @@ INTERNAL_IPS = [
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-'https://task-manager-l5zb.onrender.com'
+    "https://task-manager-l5zb.onrender.com"
 ]
