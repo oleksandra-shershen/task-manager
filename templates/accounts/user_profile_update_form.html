@@ -1,0 +1,37 @@
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .listTitleIcon {
+        vertical-align: middle;
+        margin-right: 15px;
+    }
+
+    .listTitleText {
+        margin-bottom: 0;
+    }
+</style>
+
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<div class="d-flex align-items-center mb-4">
+    <img class="listTitleIcon" src="/static/img/edit.svg" alt="Bootstrap" width="22" height="22">
+    <h3 class="listTitleText">Update user information</h3>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form|crispy }}
+    </div>
+    <div class="form-group">
+        {{ profile_form|crispy }} <!-- Ensure profile_form is rendered -->
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary btn-gradient">Save changes</button>
+    </div>
+</form>
+{% endblock %}

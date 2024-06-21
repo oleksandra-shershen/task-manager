@@ -1,0 +1,38 @@
+<style>
+.fc-day-today {
+    background-color: #f0f0f0;
+}
+
+.fc-button {
+    color: #fff;
+    background-color: #007bff;
+}
+
+.fc-daygrid-event, .fc-timegrid-event {
+    background-image: linear-gradient(to right, #9A55FF, #DA8CFF);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+}
+</style>
+
+<link href='https://unpkg.com/fullcalendar@5.9.0/main.min.css' rel='stylesheet'/>
+<script src='https://unpkg.com/fullcalendar@5.9.0/main.min.js'></script>
+
+<div id='calendar'></div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: {{ tasks_for_calendar | safe }},
+    });
+    calendar.render();
+});
+</script>

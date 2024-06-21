@@ -1,0 +1,41 @@
+{% load static %}
+<style>
+    .header {
+        display: flex;
+        align-items: center;
+        color: white;
+        padding: 10px 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .logout-button {
+        background: linear-gradient(to right, #DA8CFF, #9A55FF);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        display: flex; /* Включаем flexbox для выравнивания текста и иконки */
+        align-items: center; /* Центрирование содержимого по вертикали */
+    }
+
+    .logout-button:hover {
+        background: linear-gradient(to right, #9A55FF, #DA8CFF);
+    }
+
+    .logout-button img { /* Стили для иконки внутри кнопки */
+        margin-right: 8px; /* Отступ справа от иконки */
+    }
+</style>
+
+<div class="header">
+  <div>
+    <img src="{% static 'img/logo.svg' %}" alt="Logo" class="logo-icon">
+  </div>
+  <div style="margin-left: auto;">
+    <a href="{% url 'accounts:logout' %}" class="logout-button">
+      <img src="{% static 'img/exit.svg' %}" alt="Log out" width="22" height="22">
+      Log out
+    </a>
+  </div>
+</div>

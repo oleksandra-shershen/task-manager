@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    <title>Calendar</title>
+{% endblock %}
+
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="{% static 'img/calendar.svg' %}" alt="Bootstrap" width="50" height="50">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+Calendar
+{% endblock %}
+
+{% block content %}
+    {% include "includes/calendar.html" %}
+{% endblock %}

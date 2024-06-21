@@ -1,0 +1,159 @@
+<style>
+    .dashboard-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 10px;
+    }
+    .task-column {
+        flex: 1;
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(182, 109, 255, 0.5);
+        overflow: hidden;
+        height: calc(100vh - 100px);
+        display: flex;
+        flex-direction: column;
+    }
+    .task-column header {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        text-align: center;
+        color: #fff;
+        background: linear-gradient(to right, #DA8CFF, #9A55FF);
+        padding: 10px 0;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .task-card {
+        background-color: white;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        position: relative;
+    }
+    .task-card:last-child {
+        margin-bottom: 0;
+    }
+    .task-card h4 {
+        margin-top: 0;
+        color: #333;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.2;
+    }
+    .task-card p {
+        margin: 5px 0;
+        font-size: 14px;
+        color: #777;
+    }
+    .priority-stripe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 5px;
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    .urgent {
+        background-color: #ff4136;
+    }
+    .low {
+        background-color: #2ecc40;
+    }
+    .medium {
+        background-color: #ff851b;
+    }
+    .high {
+        background-color: #0074d9;
+    }
+    .deadline {
+        padding: 5px;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+    }
+    .deadline.past {
+        background-color: #ff4136; /* Red for past deadlines */
+    }
+    .deadline.today {
+        background-color: #ff851b; /* Orange for today's deadlines */
+    }
+    .deadline.upcoming {
+        background-color: #2ecc40; /* Green for future deadlines */
+    }
+    .initials-circle {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+        border-radius: 50%;
+        text-align: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+        background-color: #B66DFF;
+    }
+</style>
+
+{% extends "base.html" %}
+{% load static %}
+{% load tz %}
+
+{% block title %}
+    <title>Dashboard</title>
+{% endblock %}
+
+{% block tasks-toolbar-icon %}
+    <img class="listTitleIcon" src="{% static 'img/dashboard.svg' %}" alt="Bootstrap" width="50" height="50">
+{% endblock %}
+
+{% block tasks-toolbar-title %}
+    Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  {% for task_type, tasks in task_columns.items %}
+  <div class="task-column">
+    <header>{{ task_type }}</header>
+    <div class="task-cards-container">
+      {% for task in tasks %}
+      <div class="task-card">
+        <div class="priority-stripe {{ task.priority|lower }}"></div>
+        <h4>{{ task.name }}</h4>
+        <p>
+          {% if task.deadline %}
+          {% now "Y-m-d" as today %}
+          <span class="deadline {% if task.deadline|date:"Y-m-d" < today %}past{% elif task.deadline|date:"Y-m-d" == today %}today{% else %}upcoming{% endif %}">
+          <img src="{% static 'img/white_clock.svg' %}" alt="Calendar Icon" style="vertical-align: center; horiz-align:center; width: 22px; height: 22px;">
+            {{ task.deadline|date:"d M" }}
+          </span>
+          {% else %}
+          Not set
+          {% endif %}
+        </p>
+        <div class="assignees">
+          {% for assignee in task.assignees.all %}
+            <div class="initials-circle">
+              {{ assignee.first_name|first|upper }}{{ assignee.last_name|first|upper }}
+            </div>
+            <span class="assignee-name">{{ assignee.get_full_name }}</span>{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            <span>No assignees</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% empty %}
+      <p>No tasks found in this category.</p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

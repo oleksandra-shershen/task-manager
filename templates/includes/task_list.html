@@ -1,0 +1,201 @@
+{% load static %}
+<style>
+    .shadow-sm.mb-2.bg-body.rounded {
+        background-color: white;
+        margin-top: 5px;
+    }
+
+    .hover {
+        border-radius: 4px;
+        padding: 0 16px;
+        min-height: 52px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        word-wrap: break-word;
+        flex-wrap: wrap;
+    }
+
+    .task-inactive {
+        background-color: #f9f9f9;
+        color: #aaa;
+        pointer-events: none;
+        text-decoration: line-through;
+        opacity: 0.7;
+    }
+
+    .taskItem a {
+        text-decoration: none;
+        position: relative;
+        flex: 1 1 0;
+        min-height: 52px;
+        padding: 8px 14px;
+        overflow: hidden;
+        cursor: pointer;
+        color: #323130;
+        text-align: left;
+        background: none;
+        width: 100%;
+        height: 100%;
+        border: none;
+        box-shadow: none;
+    }
+
+    .task-title {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .detail-info-box {
+        display: flex;
+    }
+
+    .deadline-info-container {
+        margin-right: 10px;
+    }
+
+    .deadline-info {
+        display: flex;
+        align-items: center;
+    }
+
+    .deadline-info-icon {
+        margin-right: 5px;
+    }
+
+    .deadline-info-text {
+        font-size: 12px;
+    }
+
+    .me-3 {
+        margin-right: 3px;
+    }
+</style>
+
+<div class="shadow-sm mb-2 bg-body rounded">
+    <div>
+        <div class="taskItem {{ task.is_completed|yesno:'task-inactive,' }}">
+            <div class="hover">
+                <div style="margin-right: 10px;">
+                    <input type="checkbox" class="form-check-input" id="taskComplete{{ task.id }}" {% if task.is_completed %} checked {% endif %}>
+                </div>
+                <a role="button" href="{% url 'task_manager:task-detail' task.id %}">
+                    <span class="task-title">{{ task.name }}</span>
+                    <div class="d-flex detail-info-box">
+                        {% if task.task_type %}
+                        <span class="deadline-info-container">
+                            <span class="deadline-info">
+                                <img class="deadline-info-icon" src="/static/img/tag.svg" alt="Bootstrap" width="12" height="12">
+                                <span class="deadline-info-text">Type: {{ task.task_type }}</span>
+                            </span>
+                        </span>
+                        {% endif %}
+                        {% if task.priority %}
+                        <span class="deadline-info-container">
+                            <span class="deadline-info">
+                                <img class="deadline-info-icon" src="/static/img/exclamation-circle.svg" alt="Bootstrap" width="12" height="12">
+                                <span class="deadline-info-text">Priority: {{ task.priority }}</span>
+                            </span>
+                        </span>
+                        {% endif %}
+                        {% if task.assignees %}
+                        <span class="deadline-info-container">
+                            <span class="deadline-info">
+                                <img class="deadline-info-icon" src="/static/img/person.svg" alt="Bootstrap" width="12" height="12">
+                                <span class="deadline-info-text">Assignees:
+                                    {% for assignee in task.assignees.all %}
+                                        {{ assignee.first_name }} {{ assignee.last_name }},
+                                    {% endfor %}
+                                </span>
+                            </span>
+                        </span>
+                        {% endif %}
+                        {% if task.deadline %}
+                        <span class="deadline-info-container">
+                            <span class="deadline-info">
+                                <img class="deadline-info-icon" src="/static/img/calendar-deadline.svg" alt="Bootstrap" width="12" height="12">
+                                <span class="deadline-info-text">Deadline: {{ task.deadline }}</span>
+                            </span>
+                        </span>
+                        {% endif %}
+                    </div>
+                </a>
+                <div>
+                    <div style="display: inline-block">
+                        <span style="display: block">
+                            <a class="me-3" href="{% url 'task_manager:task-update' pk=task.id %}"
+                               onclick="return checkPermission(event, '{% for assignee in task.assignees.all %}{{ assignee.id }}{% if not forloop.last %},{% endif %}{% endfor %}');">
+                                <img src="/static/img/edit.svg" alt="Bootstrap" width="18" height="18">
+                            </a>
+                        </span>
+                    </div>
+                    <div style="display: inline-block">
+                        <span style="display: block">
+                            <a class="me-3" href="{% url 'task_manager:task-delete' pk=task.id %}"
+                               onclick="return checkPermission(event, '{% for assignee in task.assignees.all %}{{ assignee.id }}{% if not forloop.last %},{% endif %}{% endfor %}');">
+                                <img src="/static/img/cancel.svg" alt="Bootstrap" width="25" height="25">
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function checkPermission(event, assigneeIds) {
+        event.preventDefault();
+        var currentUser = {{ request.user.id }};
+        var idsArray = assigneeIds.split(',').map(Number);
+        if (!idsArray.includes(currentUser)) {
+            Swal.fire({
+                title: 'Access Denied!',
+                text: 'You can only delete or update tasks that have been assigned to you.',
+                icon: 'error',
+                confirmButtonText: 'Close'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "{% url 'task_manager:tasks' %}";
+                }
+            });
+            return false;
+        } else {
+            window.location.href = event.currentTarget.href;
+        }
+    }
+
+    $(document).ready(function() {
+        $('.task-inactive').each(function() {
+            $(this).appendTo($(this).parent());
+        });
+
+        $('.form-check-input').change(function() {
+            var checkbox = $(this);
+            var taskDiv = checkbox.closest('.taskItem');
+            var taskId = checkbox.attr('id').replace('taskComplete', '');
+            var isCompleted = checkbox.is(':checked');
+
+            $.ajax({
+                url: '{% url "task_manager:task-complete" %}',
+                type: 'POST',
+                data: {
+                    'task_id': taskId,
+                    'is_completed': isCompleted,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    if (isCompleted) {
+                        taskDiv.addClass('task-inactive');
+                        taskDiv.appendTo(taskDiv.parent());
+                    } else {
+                        taskDiv.removeClass('task-inactive');
+                    }
+                }
+            });
+        });
+    });
+</script>
