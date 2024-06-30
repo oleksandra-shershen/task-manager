@@ -3,14 +3,6 @@
 ## Overview
 Task Manager is a Django-based web application designed for IT companies to manage their workers' tasks efficiently. This tool facilitates task assignment, progress tracking, and management through an intuitive web interface.
 
-## Live Demo
-Check out the live demo of the project here:
-[Task Manager Live Demo](https://task-manager-l5zb.onrender.com)
-
-## Test Credentials
-- **Username:** test.user
-- **Password:** privet1234
-
 ## Features
 - **User Authentication:** Allows workers/users to register, log in.
 - **Worker Profile Interface:** Users can view and update their profiles, including changing personal information.
@@ -48,8 +40,14 @@ This command creates and checks out a new branch called 'develop', which is typi
 3. **Set up a Python virtual environment:**
 ```bash
 python3 -m venv venv
-source venv/bin/activate # for UNIX
-venv\Scripts\activate # for Windows
+```
+For UNIX:
+```bash
+source venv/bin/activate
+```
+For Windows:
+```bash
+venv\Scripts\activate
 ```
 Creating a virtual environment isolates your Python/Django setup on a per-project basis, ensuring that dependencies from different projects do not conflict.
 
